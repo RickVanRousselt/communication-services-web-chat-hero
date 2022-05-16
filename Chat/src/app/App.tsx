@@ -26,12 +26,14 @@ export default (): JSX.Element => {
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const [translateLanguage, setTranslateLanguage] = useState('');
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
 
   const getComponent = (): JSX.Element => {
     switch (page) {
       case 'home': {
+        localStorage.clear();
         document.title = `home - ${webAppTitle}`;
         return <HomeScreen />;
       }
@@ -45,6 +47,7 @@ export default (): JSX.Element => {
             setToken={setToken}
             setUserId={setUserId}
             setDisplayName={setDisplayName}
+            setTranslateLanguage={setTranslateLanguage}
             setThreadId={setThreadId}
             setEndpointUrl={setEndpointUrl}
           />
@@ -58,6 +61,7 @@ export default (): JSX.Element => {
               token={token}
               userId={userId}
               displayName={displayName}
+              translateLanguage={translateLanguage}
               endpointUrl={endpointUrl}
               threadId={threadId}
               endChatHandler={(isParticipantRemoved) => {
@@ -120,6 +124,7 @@ export default (): JSX.Element => {
   };
 
   if (getExistingThreadIdFromURL() && page === 'home') {
+
     setPage('configuration');
   }
 

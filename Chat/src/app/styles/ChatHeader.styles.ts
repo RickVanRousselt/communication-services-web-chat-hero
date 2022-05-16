@@ -29,6 +29,11 @@ export const leaveIcon: IIconProps = {
   iconName: 'Leave'
 };
 
+export const paneButtonContainerStyle = mergeStyles({
+  whiteSpace: 'nowrap',
+  marginRight: '0.75rem'
+});
+
 export const largeLeaveButtonContainerStyle = mergeStyles({
   whiteSpace: 'nowrap',
   '@media (max-width: 50rem)': {
@@ -51,5 +56,5 @@ export const smallLeaveButtonContainerStyle = mergeStyles({
 
 export const leaveIconStyle = mergeStyles({
   marginRight: '0.5em',
-  fontSize: '0.875rem' // 14px
+  fontSize: '0.875rem' // 14px 
 });

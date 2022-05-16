@@ -5,6 +5,7 @@ interface UserConfig {
   emoji: string;
   displayName?: string;
   id: string;
+  translateLanguage: string;
 }
 
 // For the purpose of this sample, we opted to use an in-memory data store.

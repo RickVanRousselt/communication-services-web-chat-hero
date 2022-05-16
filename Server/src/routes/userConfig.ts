@@ -26,6 +26,7 @@ router.post('/:userId', async function (req, res, next) {
   const userConfig = req.body;
   userIdToUserConfigMap.set(req.params['userId'], {
     emoji: userConfig['Emoji'],
+    translateLanguage: userConfig['Language'],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     id: (req.params as any)['threadId']
   });

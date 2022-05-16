@@ -3,7 +3,7 @@
 
 import { CAT, FOX, KOALA, MONKEY, MOUSE, OCTOPUS } from './utils/utils';
 import { useTheme } from '@azure/communication-react';
-import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
+import { FocusZone, FocusZoneDirection, PrimaryButton, Spinner, Stack, Text, Dropdown } from '@fluentui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   buttonStyle,
@@ -44,6 +44,7 @@ export interface ConfigurationScreenProps {
   setToken(token: string): void;
   setUserId(userId: string): void;
   setDisplayName(displayName: string): void;
+  setTranslateLanguage(translateLanguage: string): void;
   setThreadId(threadId: string): void;
   setEndpointUrl(endpointUrl: string): void;
 }
@@ -77,6 +78,7 @@ const PROFILE_LABEL = 'Your profile';
 export default (props: ConfigurationScreenProps): JSX.Element => {
   const avatarsList = [CAT, MOUSE, KOALA, OCTOPUS, MONKEY, FOX];
   const [name, setName] = useState('');
+  const [translateLanguage, setLanguage] = useState('');
   const [emptyWarning, setEmptyWarning] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(CAT);
   const [configurationScreenState, setConfigurationScreenState] = useState<number>(
@@ -84,7 +86,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   );
   const [disableJoinChatButton, setDisableJoinChatButton] = useState<boolean>(false);
   const theme = useTheme();
-  const { joinChatHandler, setToken, setUserId, setDisplayName, setThreadId, setEndpointUrl } = props;
+  const { joinChatHandler, setToken, setUserId, setDisplayName, setTranslateLanguage, setThreadId, setEndpointUrl } = props;
 
   // Used when new user is being registered.
   const setupAndJoinChatThreadWithNewUser = useCallback(() => {
@@ -100,10 +102,11 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       setToken(token.token);
       setUserId(token.identity);
       setDisplayName(name);
+      setTranslateLanguage(translateLanguage);
       setThreadId(threadId);
       setEndpointUrl(endpointUrl);
 
-      await sendEmojiRequest(token.identity, selectedAvatar);
+      await sendEmojiRequest(token.identity, selectedAvatar, translateLanguage);
 
       const result = await joinThread(threadId, token.identity, name);
       if (!result) {
@@ -116,7 +119,18 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       joinChatHandler();
     };
     internalSetupAndJoinChatThread();
-  }, [name, joinChatHandler, selectedAvatar, setDisplayName, setEndpointUrl, setThreadId, setToken, setUserId]);
+  }, [
+    name,
+    joinChatHandler,
+    selectedAvatar,
+    setDisplayName,
+    translateLanguage,
+    setTranslateLanguage,
+    setEndpointUrl,
+    setThreadId,
+    setToken,
+    setUserId
+  ]);
 
   useEffect(() => {
     if (configurationScreenState === CONFIGURATIONSCREEN_SHOWING_SPINNER_LOADING) {
@@ -156,6 +170,10 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
 
   const onAvatarChange = (newAvatar: string): void => {
     setSelectedAvatar(newAvatar);
+  };
+
+  const onLanguageChange = (language: string): void => {
+    setTranslateLanguage(language);
   };
 
   const displaySpinner = (spinnerLabel: string): JSX.Element => {
@@ -214,6 +232,25 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
             setEmptyWarning={setEmptyWarning}
             validateName={validateName}
             isEmpty={emptyWarning}
+          />
+          <Dropdown
+            placeHolder="Select Language to translate to"
+            label="Language:"
+            id="Basicdrop1"
+            ariaLabel="Language"
+            options={[
+              { key: 'NL', text: 'Dutch' },
+              { key: 'CZ', text: 'Czech' },
+              { key: 'BG', text: 'Bulgarian' },
+              { key: 'EN', text: 'English' },
+              { key: 'FR', text: 'French' }
+            ]}
+            onChanged={(selectedOption) => {
+              setLanguage(selectedOption.key.toString());
+              console.log('Selected', selectedOption.text);
+            }}
+            onFocus={() => console.log('onFocus called')}
+            onBlur={() => console.log('onBlur called')}
           />
           <PrimaryButton
             disabled={disableJoinChatButton}

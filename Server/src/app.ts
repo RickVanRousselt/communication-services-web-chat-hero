@@ -15,6 +15,7 @@ import isValidThread from './routes/isValidThread';
 import userConfig from './routes/userConfig';
 import createThread from './routes/createThread';
 import addUser from './routes/addUser';
+import getParticipants from './routes/getParticipants';
 
 const app = express();
 
@@ -65,6 +66,8 @@ app.use('/isValidThread', cors(), isValidThread);
  * purpose: Chat: to add user details to userconfig for chat thread
  */
 app.use('/userConfig', cors(), userConfig);
+
+app.use('/getParticipants', cors(), getParticipants);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

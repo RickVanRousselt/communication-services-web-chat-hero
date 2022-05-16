@@ -81,6 +81,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           path: '/addUser/*',
           target: 'http://[::1]:8080'
+        },
+        {
+          path: '/getParticipants/*',
+          target: 'http://[::1]:8080'
         }
       ]
     }
