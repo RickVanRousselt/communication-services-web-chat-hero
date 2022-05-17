@@ -170,11 +170,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
 
   const onAvatarChange = (newAvatar: string): void => {
     setSelectedAvatar(newAvatar);
-  };
+  }
 
-  const onLanguageChange = (language: string): void => {
-    setTranslateLanguage(language);
-  };
 
   const displaySpinner = (spinnerLabel: string): JSX.Element => {
     return <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />;

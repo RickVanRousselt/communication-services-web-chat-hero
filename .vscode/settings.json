@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/fce26361-aca9-4027-a1c6-5cd99753d3f7/resourceGroups/kbccommunicator/providers/Microsoft.Web/sites/rvrtestchat",
+    "appService.deploySubpath": "Chat/dist"
+}

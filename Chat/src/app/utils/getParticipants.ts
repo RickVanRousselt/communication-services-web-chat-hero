@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { ParticipantListParticipant } from '@azure/communication-react';
-import { getThreadId } from './getThreadId';
 
 export const getParticipants = async (threadId: string): Promise<ParticipantListParticipant[]> => {
   const getRequestOptions = {
@@ -22,4 +21,3 @@ export const getParticipants = async (threadId: string): Promise<ParticipantList
       });
   });
 };
-

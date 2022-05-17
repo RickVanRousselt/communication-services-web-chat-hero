@@ -9,7 +9,7 @@ export interface DeepLResponse {
 export interface Translation {
   detected_source_language: string;
   text: string;
-}
+} 
 
 export const translateText = async (input: string, language: string): Promise<DeepLResponse> => {
   const getRequestOptions = {

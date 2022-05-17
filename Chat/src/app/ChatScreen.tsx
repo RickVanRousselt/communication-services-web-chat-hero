@@ -9,8 +9,7 @@ import {
   createAzureCommunicationChatAdapter,
   fromFlatCommunicationIdentifier,
   MessageProps,
-  MessageRenderer,
-  ParticipantListParticipant
+  MessageRenderer
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -21,13 +20,8 @@ import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
-import { ChatParticipants } from './ChatParticipants';
-import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { getParticipants } from './utils/getParticipants';
-import { translateText, Translations } from './utils/TranslateText';
-import { Divider } from '@fluentui/react-northstar';
-import { LineStyle24Regular } from '@fluentui/react-icons';
-import { MessageThreadWithCustomMessagesExample } from './MessageRender';
+import { translateText } from './utils/TranslateText';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
@@ -48,7 +42,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [adapter, setAdapter] = useState<ChatAdapter>();
   const [hideParticipants, setHideParticipants] = useState<boolean>(false);
   const { currentTheme } = useSwitchableFluentTheme();
-  const [participantsList, setParticipants] = useState<ParticipantListParticipant[]>();
 
   useEffect(() => {
     (async () => {
@@ -62,7 +55,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       if (threadId) {
         getParticipants(threadId).then((data) => {
           console.log(data.map((o) => console.log(o)));
-          setParticipants(data);
         });
       }
       adapter.on('participantsRemoved', (listener) => {
@@ -110,7 +102,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return () => {
       adapterRef?.current?.dispose();
     };
-  }, [displayName, endpointUrl, threadId, token, userId, errorHandler, endChatHandler, hideParticipants]);
+  }, [
+    displayName,
+    endpointUrl,
+    threadId,
+    token,
+    userId,
+    errorHandler,
+    endChatHandler,
+    hideParticipants,
+    translateLanguage
+  ]);
 
   if (adapter) {
     const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>

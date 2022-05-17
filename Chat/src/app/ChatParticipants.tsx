@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Stack } from '@fluentui/react';
 import { paneButtonContainerStyle } from './styles/ChatHeader.styles';
-import { useTheme, ParticipantList, ParticipantListParticipant } from '@azure/communication-react';
-import { getParticipants } from './utils/getParticipants';
-import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
+import { ParticipantList, ParticipantListParticipant } from '@azure/communication-react';
 
 export type ChatParticipantsProps = {
   isParticipantsDisplayed: boolean;
@@ -14,9 +12,6 @@ export type ChatParticipantsProps = {
 };
 
 export const ChatParticipants = (props: ChatParticipantsProps): JSX.Element => {
-  const theme = useTheme();
-
-
   return (
     <Stack>
       <div className={paneButtonContainerStyle}>
